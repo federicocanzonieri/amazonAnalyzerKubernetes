@@ -1,0 +1,4 @@
+ESEGUI APPENA RESTARTATO LA MACCHINA (per i calico-node)
+kubectl set env daemonset/calico-node -n kube-system IP_AUTODETECTION_METHOD=interface=eth0 
+
+
