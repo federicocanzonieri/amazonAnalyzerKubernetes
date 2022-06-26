@@ -1,0 +1,5 @@
+ESEGUI APPENA RESTARTATO LA MACCHINA (per i calico-node)
+kubectl set env daemonset/calico-node -n kube-system IP_AUTODETECTION_METHOD=interface=eth0 
+kubectl port-forward --address 10.0.0.4 kibana-< >  5601
+
+
