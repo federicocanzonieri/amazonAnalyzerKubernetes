@@ -1,0 +1,93 @@
+version: "3.7"
+services:
+    python:
+        build:
+            context: ./python
+            dockerfile: Dockerfile
+        image: python-image
+        container_name: python_AM
+        networks:
+            tap:
+                ipv4_address: ${IP_PYTHON_AMAZON}
+        environment:
+            CODE_PRODUCT: ${CODE_PRODUCT}
+            PYTHON_APP: amazonScraper.py
+            HOST_LOGSTASH: ${IP_LOGSTASH}
+            PORT_LOGSTASH: ${PORT_LOGSTASH}
+            TIMEOUT_BEFORE_LOGSTASH: ${TIMEOUT_BEFORE_LOGSTASH}
+            TIMEOUT_FETCH_ANOTHER_PAGE: ${TIMEOUT_FETCH_ANOTHER_PAGE}
+            TIMEOUT_BEFORE_SEND_TO_LOGSTASH: ${TIMEOUT_BEFORE_SEND_TO_LOGSTASH}
+            DEBUG: ${DEBUG}
+            START_PAGE: ${START_PAGE}
+            END_PAGE: ${END_PAGE}
+            DOMAIN_URL: ${DOMAIN_URL}
+            MODE_REVIEWS: ${MODE_REVIEWS}
+            BUCKET_NAME: ${BUCKET_NAME}
+            AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+            AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+            NAME_FILES_S3: ${NAME_FILES_S3}
+        volumes:
+            - myapp:/usr/src/app/images/
+    spark:
+        build:
+            context: ./spark
+            dockerfile: Dockerfile
+        image: spark-image
+        container_name: spark_AM
+        networks:
+            tap:
+                ipv4_address: ${IP_SPARK}
+        environment:
+            SPARK_ACTION: "bash"
+            HOST_ELASTIC: ${IP_ELASTIC} 
+            PORT_ELASTIC: ${PORT_ELASTIC_1}
+            TOPIC: ${TOPIC}
+            TIMEOUT_BEFORE_START_SPARK: ${TIMEOUT_BEFORE_START_SPARK}
+            INDEX: ${INDEX}
+            BUCKET_NAME: ${BUCKET_NAME}
+            #TAP_CODE: app.py
+        command: ["./bin/spark-submit --packages org.elasticsearch:elasticsearch-spark-30_2.12:7.12.1,org.apache.hadoop:hadoop-aws:3.2.0  /opt/tap/app.py"]
+        #command: ["python","/opt/tap/app.py", "--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1,org.elasticsearch:elasticsearch-spark-30_2.12:7.12.1"]
+
+    elastic_search:
+        build:
+            context: ./elastic
+            dockerfile: Dockerfile
+        image: elastic-image
+        container_name: elastic_search_AM
+        networks: 
+            tap:
+                ipv4_address: ${IP_ELASTIC}
+        ports:
+            - ${PORT_ELASTIC_1}:${PORT_ELASTIC_1}
+            - ${PORT_ELASTIC_2}:${PORT_ELASTIC_2}
+        environment:
+            discovery.type: single-node
+            ES_JAVA_OPTS: -Xms1g -Xmx1g
+            
+    kibana:
+        build:
+            context: ./kibana
+            dockerfile: Dockerfile
+        image: kibana-image
+        container_name: kibana_AM
+        networks: 
+            tap:
+                ipv4_address: ${IP_KIBANA}
+        ports:
+            - ${PORT_KIBANA}:${PORT_KIBANA}
+        volumes:
+            - myapp:/usr/share/kibana/src/core/server/core_app/assets/favicons
+
+volumes:
+    myapp:
+
+networks: 
+    tap:
+        name: tap
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 10.0.100.1/24
+    
+  

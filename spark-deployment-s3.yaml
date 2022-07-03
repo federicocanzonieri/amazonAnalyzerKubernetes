@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-new.yml
+    kompose.version: 1.26.1 (a9d05d509)
+  labels:
+    io.kompose.service: spark
+  name: spark
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: spark
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose-new.yml
+        kompose.version: 1.26.1 (a9d05d509)
+      labels:
+        io.kompose.network/tap: "true"
+        io.kompose.service: spark
+    spec:
+      containers:
+        - args:
+            - ./bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1,org.elasticsearch:elasticsearch-spark-30_2.12:7.12.1  /opt/tap/app.py
+          env:
+            - name: HOST_ELASTIC
+              value: 10.0.100.51
+            - name: INDEX
+              value: reviews
+            - name: PORT_ELASTIC
+              value: "9200"
+            - name: SPARK_ACTION
+              value: bash
+            - name: TIMEOUT_BEFORE_START_SPARK
+              value: "60"
+            - name: TOPIC
+              value: amazon
+            - name: BUCKET_NAME
+              value: "federicobuckettest2021"
+            - name: AWS_ACCESS_KEY_ID
+              value: "AKIARLBECYJERSZ4MRBC"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "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"
+              
+          image: federicocanzonieri/amk-spark-s3
+          name: spark-am
+          resources: {}
+      restartPolicy: Always
+status: {}
