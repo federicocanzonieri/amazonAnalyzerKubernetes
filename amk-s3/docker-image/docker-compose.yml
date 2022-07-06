@@ -4,7 +4,7 @@ services:
         build:
             context: ./python
             dockerfile: Dockerfile
-        image: python-image
+        image: amk-python-s3
         container_name: python_AM
         networks:
             tap:
@@ -32,7 +32,7 @@ services:
         build:
             context: ./spark
             dockerfile: Dockerfile
-        image: spark-image
+        image: amk-spark-s3
         container_name: spark_AM
         networks:
             tap:
@@ -53,7 +53,7 @@ services:
         build:
             context: ./elastic
             dockerfile: Dockerfile
-        image: elastic-image
+        image: amk-elastic-search
         container_name: elastic_search_AM
         networks: 
             tap:
@@ -69,7 +69,7 @@ services:
         build:
             context: ./kibana
             dockerfile: Dockerfile
-        image: kibana-image
+        image: amk-kibana
         container_name: kibana_AM
         networks: 
             tap:

@@ -24,7 +24,7 @@ spec:
         io.kompose.service: kibana
     spec:
       containers:
-        - image: federicocanzonieri/amk-kibana-3
+        - image: federicocanzonieri/amk-kibana
           name: kibana-am
           ports:
             - containerPort: 5601

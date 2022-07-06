@@ -28,7 +28,7 @@ spec:
             - name: CODE_PRODUCT
               value: B08SN9899W
             - name: DEBUG
-              value: "no"
+              value: "yes"
             - name: DOMAIN_URL
               value: it
             - name: END_PAGE
@@ -46,18 +46,32 @@ spec:
             - name: TIMEOUT_BEFORE_LOGSTASH
               value: "100"
             - name: TIMEOUT_BEFORE_SEND_TO_LOGSTASH
-              value: "1"
+              value: "0"
             - name: TIMEOUT_FETCH_ANOTHER_PAGE
               value: "5"
-          image: federicocanzonieri/amk-python
+            - name: AWS_ACCESS_KEY_ID
+              value: "<TEMPLATE>"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "<TEMPLATE>"
+            - name: BUCKET_NAME
+              value: "federicobuckettest2021"
+            - name: NAME_FILES_S3
+              value: "Review_obt"
+          image: federicocanzonieri/amk-python-s3
           name: python-am
           resources: {}
           volumeMounts:
             - mountPath: /usr/src/app/images
               name: task-python-storage	
       restartPolicy: Always
+      # hostNetwork: true
+      # dnsPolicy: Default
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
       volumes:
         - name: task-python-storage	
           persistentVolumeClaim:
             claimName: task-python-storage-claim
+
 status: {}

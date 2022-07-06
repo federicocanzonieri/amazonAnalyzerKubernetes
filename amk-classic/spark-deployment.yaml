@@ -33,13 +33,16 @@ spec:
             - name: PORT_ELASTIC
               value: "9200"
             - name: SPARK_ACTION
-              value: bash
+              value: spark-submit-python
             - name: TIMEOUT_BEFORE_START_SPARK
               value: "60"
             - name: TOPIC
               value: amazon
-          image: federicocanzonieri/sparknew
+          image: federicocanzonieri/amk-spark
           name: spark-am
           resources: {}
       restartPolicy: Always
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
 status: {}

@@ -49,26 +49,18 @@ spec:
               value: "1"
             - name: TIMEOUT_FETCH_ANOTHER_PAGE
               value: "5"
-            - name: AWS_ACCESS_KEY_ID
-              value: "AKIARLBECYJERSZ4MRBC"
-            - name: AWS_SECRET_ACCESS_KEY
-              value: "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"
-            - name: BUCKET_NAME
-              value: "federicobuckettest2021"
-            - name: NAME_FILES_S3
-              value: "Review_obt"
-          image: federicocanzonieri/amk-python-s3
+          image: federicocanzonieri/amk-python
           name: python-am
           resources: {}
           volumeMounts:
             - mountPath: /usr/src/app/images
               name: task-python-storage	
       restartPolicy: Always
-      # hostNetwork: true
-      # dnsPolicy: Default
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
       volumes:
         - name: task-python-storage	
           persistentVolumeClaim:
             claimName: task-python-storage-claim
-
 status: {}

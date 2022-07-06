@@ -21,7 +21,7 @@ ADD code/*  /opt/tap/
 # Add Java Code
 #ADD apps /opt/tap/apps
 # Add Spark Manager
-ADD spark-manager.sh $SPARK_DIR/bin/spark-manager
-
 WORKDIR ${SPARK_DIR}
+RUN ./bin/spark-submit --packages org.elasticsearch:elasticsearch-spark-30_2.12:7.12.1,org.apache.hadoop:hadoop-aws:3.2.0  /opt/tap/test.py
+ADD spark-manager.sh $SPARK_DIR/bin/spark-manager
 ENTRYPOINT [ "spark-manager" ]

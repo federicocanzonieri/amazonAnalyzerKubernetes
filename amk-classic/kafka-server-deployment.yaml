@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-new.yml
+    kompose.version: 1.26.1 (a9d05d509)
+  labels:
+    io.kompose.service: kafka-server
+  name: kafka-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: kafka-server
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose-new.yml
+        kompose.version: 1.26.1 (a9d05d509)
+      labels:
+        io.kompose.network/tap: "true"
+        io.kompose.service: kafka-server
+    spec:
+      hostname: kafka-server
+      containers:
+        - env:
+            - name: KAFKA_ACTION
+              value: start-kafka
+          image:  federicocanzonieri/amk-kafka
+          name: kafka-server-am
+          ports:
+            - containerPort: 9092
+          resources: {}
+      restartPolicy: Always
+status: {}

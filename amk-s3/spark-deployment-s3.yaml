@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - args:
-            - ./bin/spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.1.1,org.elasticsearch:elasticsearch-spark-30_2.12:7.12.1  /opt/tap/app.py
+            - ./bin/spark-submit --packages org.elasticsearch:elasticsearch-spark-30_2.12:7.12.1,org.apache.hadoop:hadoop-aws:3.2.0  /opt/tap/app.py
           env:
             - name: HOST_ELASTIC
               value: 10.0.100.51
@@ -33,17 +33,17 @@ spec:
             - name: PORT_ELASTIC
               value: "9200"
             - name: SPARK_ACTION
-              value: bash
+              value: spark-submit-python
             - name: TIMEOUT_BEFORE_START_SPARK
-              value: "60"
+              value: "20"
             - name: TOPIC
               value: amazon
             - name: BUCKET_NAME
               value: "federicobuckettest2021"
             - name: AWS_ACCESS_KEY_ID
-              value: "AKIARLBECYJERSZ4MRBC"
+              value: "<TEMPLATE>"
             - name: AWS_SECRET_ACCESS_KEY
-              value: "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"
+              value: "<TEMPLATE>"
               
           image: federicocanzonieri/amk-spark-s3
           name: spark-am
