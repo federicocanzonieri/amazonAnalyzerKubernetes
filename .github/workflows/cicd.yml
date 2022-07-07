@@ -28,9 +28,9 @@ jobs:
           logout: true
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
+          
       - name: Build-compose
-        run: docker-compose build 
+        run: bash build.sh 
       - name: Rename images
         run: |
           docker tag amk-python-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test
