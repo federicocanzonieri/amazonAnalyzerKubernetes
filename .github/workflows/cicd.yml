@@ -37,9 +37,13 @@ jobs:
           docker tag amk-spark-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-test
           docker tag amk-elastic-search ${{ secrets.DOCKERHUB_USERNAME }}/amk-elastic-search-test
           docker tag amk-kibana ${{ secrets.DOCKERHUB_USERNAME }}/amk-kibana-test
+      
+      - name: Push images
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-test
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-elastic-search-test
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-kibana-test
         
-      - name: Build the Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/test-cicd .
         
-      - name: Push the Docker image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/test-cicd
+        
