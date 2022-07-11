@@ -39,13 +39,22 @@ spec:
             - name: TOPIC
               value: amazon
             - name: BUCKET_NAME
-              value: "federicobuckettest2021"
+              valueFrom:
+                secretKeyRef:
+                  name: my-aws-credentials
+                  key: BUCKET_NAME
             - name: AWS_ACCESS_KEY_ID
-              value: "<TEMPLATE>"
+              valueFrom:
+                secretKeyRef:
+                  name: my-aws-credentials
+                  key: AWS_ACCESS_KEY_ID
             - name: AWS_SECRET_ACCESS_KEY
-              value: "<TEMPLATE>"
-              
-          image: federicocanzonieri/amk-spark-s3
+              valueFrom:
+                secretKeyRef:
+                  name: my-aws-credentials
+                  key: AWS_SECRET_ACCESS_KEY
+            
+          image: federicocanzonieri/amk-spark-s3 
           name: spark-am
           resources: {}
       restartPolicy: Always

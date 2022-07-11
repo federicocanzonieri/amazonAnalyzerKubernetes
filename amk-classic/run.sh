@@ -10,6 +10,11 @@ echo "Creating Namespace ${1}..."
 kubectl create ns $1
 echo -e "Namespace ${1} Created \n"
 
+
+echo "Creating Secrets"
+kubectl create secret generic -n $1 --from-env-file=.env python-configuration 
+echo -e "Secrets Created \n"
+
 # echo -e "Creating PV/PVC for logstash ... "
 # ##CREO I VOLUMI PER LOGSTASH/PYTHON
 # kubectl apply -n $1 -f task-logstash-storage.yaml
@@ -45,16 +50,16 @@ echo "Creating Deployment..."
 ###ORA I DEPLOYMENT
 kubectl apply  -n $1 -f zookeeper-deployment.yaml
 ##KAFKA
+kubectl apply  -n $1 -f elastic-search-deployment.yaml
+##KIBANA
+kubectl apply  -n $1 -f kibana-deployment.yaml
+##SPARK
 kubectl apply  -n $1 -f kafka-server-deployment.yaml
 ##LOGSTASH
 kubectl apply  -n $1 -f logstash-deployment.yaml
 ##PYTHON
 kubectl apply  -n $1 -f python-deployment.yaml
 ##ELASTIC
-kubectl apply  -n $1 -f elastic-search-deployment.yaml
-##KIBANA
-kubectl apply  -n $1 -f kibana-deployment.yaml
-##SPARK
 kubectl apply  -n $1 -f spark-deployment.yaml
 
 echo -e "Deployment Created \n"

@@ -16,11 +16,19 @@ kubectl apply -n $1 -f task-python-storage-claim.yaml
 echo -e "PV/PVC Created \n"
 sleep 10
 
+echo "Creating Secrets"
+kubectl create secret generic -n $1 --from-env-file=.env-aws-credentials my-aws-credentials 
+kubectl create secret generic -n $1 --from-env-file=.env python-configuration 
+echo -e "Secrets Created \n"
+
 echo "Creating Services..."
 ##ELASTIC
 kubectl apply  -n $1 -f elastic-search-service.yaml
 ##KIBANA
 kubectl apply  -n $1 -f kibana-service.yaml
+##GRAFANA
+kubectl apply  -n $1 -f grafana-service.yaml
+
 echo -e "Services Created \n"
 sleep 5
 
@@ -31,6 +39,8 @@ sleep 5
 ##PYTHON
 echo "Creating Deployment..."
 kubectl apply  -n $1 -f python-deployment-s3.yaml
+##GRAFANA
+kubectl apply  -n $1 -f grafana-deployment.yaml
 ##ELASTIC
 kubectl apply  -n $1 -f elastic-search-deployment.yaml
 ##KIBANA

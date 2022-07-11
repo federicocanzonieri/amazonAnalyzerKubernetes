@@ -1,2 +1,10 @@
+amk-classic/docker-images/spark/setup
+amk-s3/docker-images/spark/setup
+
+bin/*
+*/esegui.txt
+spark/test1.json
+docker-images/docker-compose.yml
 amk-classic/docker-image/spark/setup/*
 amk-s3/docker-image/spark/setup/*
+

@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-new.yml
+    kompose.version: 1.26.1 (a9d05d509)
+  labels:
+    io.kompose.service: logstash
+  name: logstash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: logstash
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose-new.yml
+        kompose.version: 1.26.1 (a9d05d509)
+      labels:
+        io.kompose.network/tap: "true"
+        io.kompose.service: logstash
+    spec:
+      containers:
+
+          - image: federicocanzonieri/amk-logstash-opensearch
+            name: logstash-am
+            env:
+              - name: INDEX_OPENSEARCH
+                valueFrom:
+                  secretKeyRef:
+                    name: my-aws-credentials
+                    key: INDEX_OPENSEARCH
+              - name: USER_OPENSEARCH
+                valueFrom:
+                  secretKeyRef:
+                    name: my-aws-credentials
+                    key: USER_OPENSEARCH
+              - name: PASSWORD_OPENSEARCH
+                valueFrom:
+                  secretKeyRef:
+                    name: my-aws-credentials
+                    key: PASSWORD_OPENSEARCH
+              - name: DOMAIN_URL_OPENSEARCH
+                valueFrom:
+                  secretKeyRef:
+                    name: my-aws-credentials
+                    key: DOMAIN_URL_OPENSEARCH
+              - name: BUCKET_OUTPUT
+                valueFrom:
+                  secretKeyRef:
+                    name: my-aws-credentials
+                    key: BUCKET_OUTPUT
+              - name: REGION_BUCKET
+                valueFrom:
+                  secretKeyRef:
+                    name: my-aws-credentials
+                    key: REGION_BUCKET
+              - name: AWS_SECRET_ACCESS_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: my-aws-credentials
+                    key: AWS_SECRET_ACCESS_KEY
+              - name: AWS_ACCESS_KEY_ID
+                valueFrom:
+                  secretKeyRef:
+                    name: my-aws-credentials
+                    key: AWS_ACCESS_KEY_ID
+            ports:
+              - containerPort: 6000
+            resources: {}
+          # volumeMounts:
+          #   - mountPath: /usr/share/logstash/pipeline
+          #     name: task-logstash-storage
+      restartPolicy: Always
+      # volumes:
+      #   - name: task-logstash-storage
+      #     persistentVolumeClaim:
+      #       claimName: task-logstash-storage-claim
+status: {}

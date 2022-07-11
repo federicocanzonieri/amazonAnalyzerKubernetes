@@ -1,0 +1,2 @@
+docker build -t amk-python .
+docker run -it --rm  -e CODE_PRODUCT=B093T7GQWB -e PYTHON_APP=amazonScraper.py  selenium:prova /bin/bash

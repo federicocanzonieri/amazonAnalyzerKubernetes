@@ -35,7 +35,7 @@ spec:
             - name: SPARK_ACTION
               value: spark-submit-python
             - name: TIMEOUT_BEFORE_START_SPARK
-              value: "60"
+              value: "120"
             - name: TOPIC
               value: amazon
           image: federicocanzonieri/amk-spark

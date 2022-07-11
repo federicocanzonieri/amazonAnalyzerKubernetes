@@ -26,36 +26,56 @@ spec:
       containers:
         - env:
             - name: CODE_PRODUCT
-              value: B08SN9899W
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: CODE_PRODUCT
+            - name: DOMAIN_URL
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: DOMAIN_URL
+            - name: MODE_REVIEWS
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: MODE_REVIEWS
+            - name: START_PAGE
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: START_PAGE
+            - name: END_PAGE
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: END_PAGE
+            - name: TIMEOUT_FETCH_ANOTHER_PAGE
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: TIMEOUT_FETCH_ANOTHER_PAGE
             - name: DEBUG
               value: "no"
-            - name: DOMAIN_URL
-              value: it
-            - name: END_PAGE
-              value: "6"
             - name: HOST_LOGSTASH
               value: 10.0.100.15
-            - name: MODE_REVIEWS
-              value: recent
             - name: PORT_LOGSTASH
               value: "6000"
             - name: PYTHON_APP
               value: amazonScraper.py
-            - name: START_PAGE
-              value: "0"
             - name: TIMEOUT_BEFORE_LOGSTASH
               value: "100"
             - name: TIMEOUT_BEFORE_SEND_TO_LOGSTASH
               value: "1"
-            - name: TIMEOUT_FETCH_ANOTHER_PAGE
-              value: "5"
+
+            
           image: federicocanzonieri/amk-python
           name: python-am
           resources: {}
           volumeMounts:
             - mountPath: /usr/src/app/images
               name: task-python-storage	
-      restartPolicy: Always
+      # restartPolicy: Always
       dnsConfig:
         nameservers:
           - 8.8.8.8

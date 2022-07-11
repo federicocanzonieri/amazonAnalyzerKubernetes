@@ -6,4 +6,4 @@ if [ $# -lt 3 ]; then
 fi
 
 
-kubectl port-forward -n $1 $2  $3 --address=10.0.0.5
+kubectl port-forward -n $1 svc/$2 $3 --address=10.0.0.5

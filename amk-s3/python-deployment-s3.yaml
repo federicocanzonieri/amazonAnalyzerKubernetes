@@ -26,37 +26,73 @@ spec:
       containers:
         - env:
             - name: CODE_PRODUCT
-              value: B08SN9899W
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: CODE_PRODUCT
+            - name: DOMAIN_URL
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: DOMAIN_URL
+            - name: MODE_REVIEWS
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: MODE_REVIEWS
+            - name: START_PAGE
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: START_PAGE
+            - name: END_PAGE
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: END_PAGE
+            - name: TIMEOUT_FETCH_ANOTHER_PAGE
+              valueFrom:
+                secretKeyRef:
+                  name: python-configuration
+                  key: TIMEOUT_FETCH_ANOTHER_PAGE
             - name: DEBUG
               value: "yes"
-            - name: DOMAIN_URL
-              value: it
-            - name: END_PAGE
-              value: "6"
             - name: HOST_LOGSTASH
               value: 10.0.100.15
-            - name: MODE_REVIEWS
-              value: recent
             - name: PORT_LOGSTASH
               value: "6000"
             - name: PYTHON_APP
               value: amazonScraper.py
-            - name: START_PAGE
-              value: "0"
             - name: TIMEOUT_BEFORE_LOGSTASH
               value: "100"
             - name: TIMEOUT_BEFORE_SEND_TO_LOGSTASH
               value: "0"
-            - name: TIMEOUT_FETCH_ANOTHER_PAGE
-              value: "5"
             - name: AWS_ACCESS_KEY_ID
-              value: "<TEMPLATE>"
+              valueFrom:
+                secretKeyRef:
+                  name: my-aws-credentials
+                  key: AWS_ACCESS_KEY_ID
             - name: AWS_SECRET_ACCESS_KEY
-              value: "<TEMPLATE>"
+              valueFrom:
+                secretKeyRef:
+                  name: my-aws-credentials
+                  key: AWS_SECRET_ACCESS_KEY
             - name: BUCKET_NAME
-              value: "federicobuckettest2021"
+              valueFrom:
+                secretKeyRef:
+                  name: my-aws-credentials
+                  key: BUCKET_NAME
             - name: NAME_FILES_S3
-              value: "Review_obt"
+              valueFrom:
+                secretKeyRef:
+                  name: my-aws-credentials
+                  key: NAME_FILES_S3
+          
+
+          # envFrom:
+          # - secretRef:
+          #     name: my-aws-credentials 
+
           image: federicocanzonieri/amk-python-s3
           name: python-am
           resources: {}

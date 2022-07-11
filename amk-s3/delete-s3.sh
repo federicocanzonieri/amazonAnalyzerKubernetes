@@ -9,6 +9,11 @@ echo "Deleting namespace(ns) ${1}..."
 kubectl delete ns $1
 echo -e "Namespace(ns) ${1} deleted \n"
 
+echo "Deleting namespace(ns) ${1}..."
+kubectl delete secret 
+echo -e "Namespace(ns) ${1} deleted \n"
+
+
 echo "Persisten Volume (pv) task-python-storage..."
 kubectl delete pv task-python-storage
 echo -e "Persisten Volume (pv) task-python-storage deleted \n"
