@@ -1,8 +1,8 @@
 #!/bin/bash
 
 export DEBIAN_FRONTEND=noninteractive
-KVERS=1.19.9-00
-DVERS='5:19.03.14~3-0~ubuntu-bionic'
+export KVERS=1.19.9-00
+export DVERS='5:19.03.14~3-0~ubuntu-focal'
 
 # Update hosts file
 echo "[TASK 1] Update /etc/hosts file"
