@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Check For spark ..."
-if [ "$(ls -A spark/setup/)" ]; then
+if [ "$(ls -A spark-s3-opensearch/setup/)" ]; then
      echo "Spark's found"
 else
     echo "Installing Spark's dependencies "
@@ -11,11 +11,11 @@ else
 fi
 
 echo "Building images docker ..."
-cd elastic
-docker build -t amk-elastic-search .
-cd kibana
-docker build -t amk-kibana .
-cd spark
+# cd elastic
+# docker build -t amk-elastic-search .
+# cd kibana
+# docker build -t amk-kibana .
+cd spark-s3-opensearch
 docker build -t amk-spark-s3-to-s3 .
 cd python
 docker build -t amk-python-s3 .

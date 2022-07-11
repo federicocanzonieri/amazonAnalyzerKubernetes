@@ -30,22 +30,25 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           
       - name: Build-compose
-        run: bash build.sh 
+        run: bash build-s3-opensearch.sh 
       - name: Rename images
         run: |
           docker tag amk-python-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test
           docker tag amk-spark-s3-to-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-test
-          docker tag amk-elastic-search ${{ secrets.DOCKERHUB_USERNAME }}/amk-elastic-search-test
-          docker tag amk-kibana ${{ secrets.DOCKERHUB_USERNAME }}/amk-kibana-test
+  #        docker tag amk-elastic-search ${{ secrets.DOCKERHUB_USERNAME }}/amk-elastic-search-test
+ #         docker tag amk-kibana ${{ secrets.DOCKERHUB_USERNAME }}/amk-kibana-test
           docker tag amk-logstash-opensearch ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch
           
       - name: Push images
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-test
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-elastic-search-test
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-kibana-test
+   #       docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-elastic-search-test
+   #       docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-kibana-test
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch
+
+
+      
           
         
         
