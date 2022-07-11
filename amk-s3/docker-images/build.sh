@@ -16,9 +16,9 @@ docker build -t amk-elastic .
 cd kibana
 docker build -t amk-kibana .
 cd spark
-docker build -t amk-spark .
+docker build -t amk-spark-s3-to-s3 .
 cd python
-docker build -t amk-python .
+docker build -t amk-python-s3 .
 cd logstash
-docker build -t amk-logstash .
+docker build -t amk-logstash-opensearch .
 echo "Done"
