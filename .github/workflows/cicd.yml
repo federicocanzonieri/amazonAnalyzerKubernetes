@@ -16,7 +16,7 @@ jobs:
     environment: test   
     defaults:
       run:
-        working-directory: ./amk-s3/docker-image
+        working-directory: ./amk-s3/docker-images
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
