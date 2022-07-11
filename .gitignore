@@ -1,3 +1,3 @@
 amk-classic/docker-images/spark/setup/*
 amk-s3/docker-images/spark-s3/setup/*
-amk-s3/docker-images/spark-s3/setup/*
+amk-s3/docker-images/spark-s3-opensearch/setup/*
