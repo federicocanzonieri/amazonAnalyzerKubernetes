@@ -73,4 +73,4 @@ Here is the table of services and network configuration.
 
 
 ## Notes
-Make sure that you have all the containers up after 2-3 min after launching the "start.sh".
+Make sure that you have all the containers up after 2-3 min after launching the "run.sh".
