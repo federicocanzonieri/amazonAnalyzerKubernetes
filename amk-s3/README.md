@@ -61,8 +61,12 @@ You can use to stop:
   ./delete.sh <NAMESPACE>
   ```
 Make sure to configure **.env** properly before use it (**CODE\_PRODUCT**, **START\_PAGE**,**END\_PAGE**,...) and configure **.env-aws-credentials** (**AWS_ACCESS_KEY_ID**,**AWS_SECRET_ACCESS_KEY**,**BUCKET_NAME**)   .
-You can see the result using *kibana* dashboard.
-
+You can see the result using *kibana* dashboard, it exposes a service with a **Nodeport(30008)**, so you can access the dashboard at this address **<IP_WORKER_KIBANA>:30008**, or if you don't have a public ip for worker you can use (configure the *ip_private_master* in the script below)
+- Port-forward:
+  ```bash
+  ./port-forward.sh <NAMESPACE> <POD> <PORT_POD>
+  ```
+it will open a port-forward with the ip of the master, now you can visualize kibana ad **<IP_MASTER>:5601**.
 
 
 
