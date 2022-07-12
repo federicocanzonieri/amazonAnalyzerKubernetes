@@ -11,7 +11,7 @@
 
 ## Start
 
-This project required **K8S cluster** and **AWS account**
+This project required **K8S cluster**.
 To configure a K8S cluster you can see the *k8s_ubuntu_vagrant*.
 - Download
   ```bash
