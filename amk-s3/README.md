@@ -80,8 +80,7 @@ The app uses the docker images present on the *docker hub*, you can build your o
   
 ## Configuration
 
-To modify configuration see **python-deployment.yaml** file.
-
+Configuration for Python(*.env*)
 | Variable| Description |Default value|
 | :-: | :-: |:-:|
 |CODE_PRODUCT| Code of the product to analyze (default ...) | ... |
@@ -90,6 +89,21 @@ To modify configuration see **python-deployment.yaml** file.
 |END_PAGE|Page end reviews | 6 |
 |DOMAIN_URL| Domain for fetch pages (www.amazon.) | supported co.uk,it  |
 |MODE_REVIEWS| "recent" or "useful" | "recent"  |
+
+Configuration for AWS services(*.env-aws-credentials*).
+
+| Variable| Description |Default value|
+| :-: | :-: |:-:|
+|AWS_ACCESS_KEY_ID| AWS ACCESS KEY | <TEMPLATE_ACCESS_KEY_ID> |
+|AWS_SECRET_ACCESS_KEY|AWS SECRET ACCESS KEY  | <TEMPLATE_SECRET_ACCESS_KEY> |
+|BUCKET_NAME |Bucket for the output of Python |< > |
+|NAME_FILES_S3|Name for the files in the bucket  | Review_obt_test |
+|BUCKET_OUTPUT| Bucket for the output of spark | <TEMPLATE_BUCKET_STORE_2>  |
+|REGION_BUCKET| Region of the bucket (BUCKET_OUTPUT) | us-east-1  |
+|INDEX_OPENSEARCH| Index for saving data on opensearch |review_product_amazon  |
+|USER_OPENSEARCH|  User opensearch | <TEMPLATE_USER_OPENSEARCH>  |
+|PASSWORD_OPENSEARCH| Password for opensearch | <TEMPLATE_PASSWORD_OPENSEARCH>  |
+|DOMAIN_URL_OPENSEARCH| Domain url for opensearch | "<TEMPLATE_DOMAIN_OPENSEARCH>  |
 
 
 ## Notes
