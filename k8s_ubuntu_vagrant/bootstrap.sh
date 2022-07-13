@@ -1,16 +1,18 @@
 #!/bin/bash
 
+
+
 export DEBIAN_FRONTEND=noninteractive
 export KVERS=1.19.9-00
 export DVERS='5:19.03.14~3-0~ubuntu-focal'
 
 # Update hosts file
-echo "[TASK 1] Update /etc/hosts file"
-cat >>/etc/hosts<<EOF
-10.0.0.4 kmaster.example.com kmaster
-10.0.0.5 kworker0.example.com kworker0
-10.0.0.6 kworker1.example.com kworker1
-EOF
+# echo "[TASK 1] Update /etc/hosts file"
+# cat >>/etc/hosts<<EOF
+# 10.0.0.4 kmaster.example.com kmaster
+# 10.0.0.5 kworker0.example.com kworker0
+# 10.0.0.6 kworker1.example.com kworker1
+# EOF
 
 
 echo "[TASK 2] Install docker container engine"
@@ -21,7 +23,7 @@ apt-get update -y
 apt-get install docker-ce="$DVERS" docker-ce-cli="$DVERS" -y
 
 # add account to the docker group
-usermod -aG docker azureuser
+usermod -aG docker $USER
 
 # Enable docker service
 echo "[TASK 3] Enable and start docker service"
@@ -76,5 +78,3 @@ echo -e "kubeadmin\nkubeadmin" | passwd root
 # Update azureuser user's bashrc file
 echo "export TERM=xterm" >> /etc/bashrc
 
-cp /azureuser/_inputrc /home/azureuser/.inputrc
-chown -R azureuser:azureuser /home/azureuser/.inputrc
