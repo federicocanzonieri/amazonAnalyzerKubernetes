@@ -1,7 +1,7 @@
 
 if [ $# -lt 3 ]; then
     # TODO: print usage
-    echo -e "You need to specify a namespace(ns), pod, service please \n"
+    echo -e "You need to specify a namespace(ns), service, port please \n"
     exit 1
 fi
 ADDRESS=$(hostname -I | cut -d' ' -f1)

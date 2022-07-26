@@ -26,17 +26,19 @@ def get_reviews(soup,s):
             title=item.find('a', {'data-hook': 'review-title'}).text.strip()
         except Exception as e:
             title=item.find('span', {'data-hook': 'review-title'}).text.strip()
-            print(e)
+            # print(e)
 
         try:
             rating=item.find('span', {'class': 'a-icon-alt'}).text[:1].strip()
         except Exception as e:
-            print(e)
+            pass
+            # print(e)
 
         try:
             body=item.find('span', {'data-hook': 'review-body'}).text.strip()
         except Exception as e:
-            print(e)
+            pass
+            # print(e)
 
         try:
             date=item.find('span',{'data-hook':'review-date'}).text.strip()
@@ -49,18 +51,20 @@ def get_reviews(soup,s):
                 date=lst[2]+"-"+months[lst[1].lower()]+"-" +lst[0]
 
         except Exception as e:
-            print(e)
+            pass
+            # print(e)
 
         try:
             name=item.find('span',{'class':'a-profile-name'}).text.strip()
         except Exception as e:
-            print(e)
+            pass
+            # print(e)
 
         try:
             verified_buy=item.find('span',{'data-hook':'avp-badge'}).text.strip()
         except Exception as e:
             verified_buy="NO"
-            print(e)
+            # print(e)
         
         try:
             helpful_vote=item.find('span',{'data-hook':'helpful-vote-statement'}).text.strip().split(" ")[0].replace(",","")
@@ -69,7 +73,7 @@ def get_reviews(soup,s):
             
         except Exception as e:
             helpful_vote=0
-            print(e)
+            # print(e)
         
 
         review = {
@@ -85,72 +89,65 @@ def get_reviews(soup,s):
         if DEBUG=='yes':
             print(review)
         
-        # s3 = boto3.client('s3')
-        # print(dir(s3))
+#         s3 = boto3.client('s3')
 #         s3 = boto3.client('s3',aws_access_key_id=AWS_ACCESS_KEY_ID,
-#          aws_secret_access_key=AWS_SECRET_ACCESS_KEY )
-#         # print(dir(s3))
-# #       print(review)
+#         aws_secret_access_key=AWS_SECRET_ACCESS_KEY )
 #         global counter
 #         s3.put_object(
 #             Body=json.dumps(review),
 #             Bucket=BUCKET_NAME,
 #             Key=NAME_FILES_S3+str(counter)
 #         )
-
 #         counter+=1
+
         s.send(json.dumps(review).encode())
         s.send(bytes(REQUIRED_CHARACTER,'utf-8'))
         time.sleep(int(TIMEOUT_BEFORE_SEND_TO_LOGSTASH))
-        #print(title)
 
     print("END GENERAL",flush=True)
 
 
 
+##EXAMPLE URL
 #https://m.media-amazon.com/images/I/81SiQ9hXnDL._AC_SX679_.jpg
 def get_photos(url):
-    print(url)
     driver.get(url)
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
     img_container=soup.find_all("div",{"id":"imgTagWrapperId"})
     download_url=""
     for item in img_container:
-        #print(item)
-        
-        for img in item.find_all("img"):
-            
-            #print(img.get('data-a-dynamic-image').split(":")[1])
+        for img in item.find_all("img"):            
+            # print(img.get('data-a-dynamic-image').split(":")[1])
             download_url="https:"+str(img.get('data-a-dynamic-image').split(":")[1])
-            #print(download_url[:-1])
         
-
     response = requests.get(str(download_url[:-1]))
     file = open("images/product_image.jpg", "wb")
     file.write(response.content)
     file.close()
+
+ua=UserAgent()
+userAgent=ua.random
+print(f"\nUser Agent {userAgent} \n")
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-extensions')
-ua=UserAgent()
-userAgent=ua.random
-print(userAgent)
+chrome_options.add_argument('--disable-dev-shm-usage')
 chrome_options.add_argument(f'user-agent={userAgent}')
 driver = webdriver.Chrome(chrome_options=chrome_options)
 
-CODE_PRODUCT=os.getenv("CODE_PRODUCT")                             ##CODICE PRODOTTO DA ANALIZZARE
-HOST_LOGSTASH=os.getenv("HOST_LOGSTASH")                           ##IP LOGSTASH
-PORT_LOGSTASH=os.getenv("PORT_LOGSTASH")                           ##PORT LOGSTASH
-TIMEOUT_BEFORE_LOGSTASH=os.getenv("TIMEOUT_BEFORE_LOGSTASH")       ##SECONDI DA ASPETTARE PRIMA CHE LOGSTASH PARTE (100 sec) DEPRECATO
+CODE_PRODUCT=os.getenv("CODE_PRODUCT")                                      ##CODICE PRODOTTO DA ANALIZZARE
+HOST_LOGSTASH=os.getenv("HOST_LOGSTASH")                                    ##IP LOGSTASH
+PORT_LOGSTASH=os.getenv("PORT_LOGSTASH")                                    ##PORT LOGSTASH
+TIMEOUT_BEFORE_LOGSTASH=os.getenv("TIMEOUT_BEFORE_LOGSTASH")                ##SECONDI DA ASPETTARE PRIMA CHE LOGSTASH PARTE (100 sec) DEPRECATO
 TIMEOUT_BEFORE_SEND_TO_LOGSTASH=os.getenv("TIMEOUT_BEFORE_SEND_TO_LOGSTASH")##SECONDI DA ASPETTARE PRIMA DI INVIARE DATI A LOGSTASH PARTE (1 sec) DEPRECATO
-TIMEOUT_FETCH_ANOTHER_PAGE=os.getenv("TIMEOUT_FETCH_ANOTHER_PAGE") ##SECONDI PRIMA CHE PRENDI UN'ALTRA PAGINA (5 sec) (SERVE A EVITARE DI ESSERE BANNATO)
-START_PAGE=int(os.getenv("START_PAGE"))                            ##PAGINA DA CUI INIZIARE (PREFERIBILMENTE 0)
-END_PAGE=int(os.getenv("END_PAGE"))                                ##PAGINA FINALE 
-DEBUG=os.getenv("DEBUG")                                           ##MODALITA DEBUG SKIPPA CONNESSIONE LOGSTASH SOLO PER TEST E ESPERIMENTI!
+TIMEOUT_FETCH_ANOTHER_PAGE=os.getenv("TIMEOUT_FETCH_ANOTHER_PAGE")          ##SECONDI PRIMA CHE PRENDI UN'ALTRA PAGINA (5 sec) (SERVE A EVITARE DI ESSERE BANNATO)
+START_PAGE=int(os.getenv("START_PAGE"))                                     ##PAGINA DA CUI INIZIARE (PREFERIBILMENTE 0)
+END_PAGE=int(os.getenv("END_PAGE"))                                         ##PAGINA FINALE 
+DEBUG=os.getenv("DEBUG")                                                    ##MODALITA DEBUG SKIPPA CONNESSIONE LOGSTASH SOLO PER TEST E ESPERIMENTI!
 DOMAIN_URL=os.getenv("DOMAIN_URL")
 MODE_REVIEWS=os.getenv("MODE_REVIEWS")
 # BUCKET_NAME=os.getenv("BUCKET_NAME")
@@ -169,8 +166,8 @@ else:
 HOST=str(os.getenv("LOGSTASH_SERVICE_HOST"))
 HOST_LOGSTASH=HOST
 PORT=int(PORT_LOGSTASH)
-REQUIRED_CHARACTER="\n"                                            ##REQUIRED FOR LOGSTASH TO TAKE EVENT SEPARATED (TCP PLUGIN)
-s="PLACEHOLDER"                                                    ##PLACEHOLDER FOR SOCKET
+REQUIRED_CHARACTER="\n"                                                       ##REQUIRED FOR LOGSTASH TO TAKE EVENT SEPARATED (TCP PLUGIN)
+s="PLACEHOLDER"                                                               ##PLACEHOLDER FOR SOCKET
 
 
 ## WAIT UNTIL LOGSTASH IS UP 
@@ -197,23 +194,18 @@ if DEBUG=='no':
 
 
 ##TAKE PHOTOS
-# url_photo="https://www.amazon."+str(DOMAIN_URL)+"/dp/"+str(CODE_PRODUCT)
-# get_photos(url_photo)
-
-
+url_photo="https://www.amazon."+str(DOMAIN_URL)+"/dp/"+str(CODE_PRODUCT)
+get_photos(url_photo)
 
 
 for i in range(START_PAGE,END_PAGE):
     url="https://www.amazon."+str(DOMAIN_URL) + "/product-reviews/"+ str(CODE_PRODUCT) +"/ref=cm_cr_dp_d_show_all_btm?ie=UTF8&reviewerType=all_reviews&"+"sortBy="+str(MODE_REVIEWS) +"&pageNumber="+str(i)
     driver.get(url)
 
-    ####CANCELLARE DOPO
-    print(url)
-    ####
+    print(f"Url: {url}")
 
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
-    #print(soup)
     get_reviews(soup,s)
     time.sleep(int(TIMEOUT_FETCH_ANOTHER_PAGE))
 
@@ -225,7 +217,8 @@ for i in range(START_PAGE,END_PAGE):
 if DEBUG=='no':
     s.close()
 
-print("FINISHED FETCH PAGES")
-
-
+print("FINISHED FETCH PAGES\n")
+print("NOW LOOP INFINITE JUST FOR THE POD NOT RESTARTING =)\n")
+while True:
+    pass
 
