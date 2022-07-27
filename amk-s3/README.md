@@ -18,6 +18,31 @@ To configure a K8S cluster you can see the *k8s_ubuntu_vagrant*.
   git clone https://github.com/federicocanzonieri/amazonAnalyzerKubernetes.git
   cd amazonAnalyzerKubernetes
   ```
+
+### AMK-S3-OPENSEARCH-LAMBDA
+The folder *amk-s3* use  kubernetes pods/services locally and some AWS services (S3,Lambda, Amazon Open Search Service, Grafana).
+Before starting the application make sure to configure the **.env** and **.env-aws-credentials** files on *python-deployment.yaml* (see after).
+After that you can use to start:
+- Start:
+  ```bash
+  cd amk-s3
+  ./run-s3-lambda-opensearch.sh <NAMESPACE>
+  ```
+You can use to stop:
+- Stop:
+  ```bash
+  ./delete.sh <NAMESPACE>
+  ```
+Make sure to configure **.env** properly before use it (**CODE\_PRODUCT**, **START\_PAGE**,**END\_PAGE**,...) and configure **.env-aws-credentials** (**AWS_ACCESS_KEY_ID**,**AWS_SECRET_ACCESS_KEY**,**BUCKET_NAME**,**BUCKET_OUTPUT**).
+You can see the result using *opensearch* dashboard (you should have the URL).
+
+## Lambda function configuration
+
+The lambda.zip contains all the configuration, create a lambda function and upload the *zip* file, add a trigger from *S3* from the BUCKET_OUTPUT, trigger method PUT, filter by *.json* files only, add the environment variable *aws_access_key_id*, *aws_secret_access_key* (in lower case)  in the lambda editor. Add the permission for S3 read and Elastic Search operations.
+
+
+
+
 ### AMK-S3-OPENSEARCH
 The folder *amk-s3* use  kubernetes pods/services locally and some AWS services (S3, Amazon Open Search Service, Grafana).
 Before starting the application make sure to configure the **.env** and **.env-aws-credentials** files on *python-deployment.yaml* (see after).
@@ -52,7 +77,7 @@ Before starting the application make sure to configure the **.env** and **.env-a
 After that you can use to start:
 - Start:
   ```bash
-  cd amk-classic
+  cd amk-s3
   ./run-s3.sh <NAMESPACE>
   ```
 You can use to stop:
@@ -80,7 +105,8 @@ The app uses the docker images present on the *docker hub*, you can build your o
   
 ## Configuration
 
-Configuration for Python(*.env*)
+To modify configuration see **python-deployment.yaml** file.
+
 | Variable| Description |Default value|
 | :-: | :-: |:-:|
 |CODE_PRODUCT| Code of the product to analyze (default ...) | ... |
@@ -89,21 +115,6 @@ Configuration for Python(*.env*)
 |END_PAGE|Page end reviews | 6 |
 |DOMAIN_URL| Domain for fetch pages (www.amazon.) | supported co.uk,it  |
 |MODE_REVIEWS| "recent" or "useful" | "recent"  |
-
-Configuration for AWS services(*.env-aws-credentials*).
-
-| Variable| Description |Default value|
-| :-: | :-: |:-:|
-|AWS_ACCESS_KEY_ID| AWS ACCESS KEY | <TEMPLATE_ACCESS_KEY_ID> |
-|AWS_SECRET_ACCESS_KEY|AWS SECRET ACCESS KEY  | <TEMPLATE_SECRET_ACCESS_KEY> |
-|BUCKET_NAME |Bucket for the output of Python |< > |
-|NAME_FILES_S3|Name for the files in the bucket  | Review_obt_test |
-|BUCKET_OUTPUT| Bucket for the output of spark | <TEMPLATE_BUCKET_STORE_2>  |
-|REGION_BUCKET| Region of the bucket (BUCKET_OUTPUT) | us-east-1  |
-|INDEX_OPENSEARCH| Index for saving data on opensearch |review_product_amazon  |
-|USER_OPENSEARCH|  User opensearch | <TEMPLATE_USER_OPENSEARCH>  |
-|PASSWORD_OPENSEARCH| Password for opensearch | <TEMPLATE_PASSWORD_OPENSEARCH>  |
-|DOMAIN_URL_OPENSEARCH| Domain url for opensearch | "<TEMPLATE_DOMAIN_OPENSEARCH>  |
 
 
 ## Notes
