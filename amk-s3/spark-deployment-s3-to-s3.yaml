@@ -63,4 +63,7 @@ spec:
           name: spark-am
           resources: {}
       restartPolicy: Always
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
 status: {}

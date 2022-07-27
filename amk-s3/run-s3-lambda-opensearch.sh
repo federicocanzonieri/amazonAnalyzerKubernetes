@@ -1,8 +1,10 @@
 #!/bin/bash
 
+
+
 if [ $# -lt 1 ]; then
     # TODO: print usage
-    echo -e "You need to specify a namespace(ns) please \n"
+    echo -e"You need to specify a namespace(ns) please \n"
     exit 1
 fi
 
@@ -21,28 +23,14 @@ kubectl create secret generic -n $1 --from-env-file=.env-aws-credentials my-aws-
 kubectl create secret generic -n $1 --from-env-file=.env python-configuration 
 echo -e "Secrets Created \n"
 
-echo "Creating Services..."
-##ELASTIC
-kubectl apply  -n $1 -f elastic-search-service.yaml
-##KIBANA
-kubectl apply  -n $1 -f kibana-service.yaml
-##GRAFANA
-kubectl apply  -n $1 -f grafana-service.yaml
 
-echo -e "Services Created \n"
-sleep 5
 
 
 ###ORA I DEPLOYMENT
 ##PYTHON
 echo "Creating Deployment..."
 kubectl apply  -n $1 -f python-deployment-s3.yaml
-##GRAFANA
-kubectl apply  -n $1 -f grafana-deployment.yaml
-##ELASTIC
-kubectl apply  -n $1 -f elastic-search-deployment.yaml
-##KIBANA
-kubectl apply  -n $1 -f kibana-deployment.yaml
 ##SPARK
-kubectl apply  -n $1 -f spark-deployment-s3.yaml
+kubectl apply  -n $1 -f spark-deployment-s3-to-s3.yaml
+
 echo -e "Deployment Created\n"

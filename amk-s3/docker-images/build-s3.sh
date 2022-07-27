@@ -13,12 +13,16 @@ fi
 echo "Building images docker ..."
 cd elastic
 docker build -t amk-elastic-search .
+cd ..
 cd kibana
 docker build -t amk-kibana .
+cd ..
 cd spark-s3
 docker build -t amk-spark-s3 .
+cd ..
 cd python
 docker build -t amk-python-s3 .
+cd ..
 cd grafana
 docker build -t amk-grafana .
 

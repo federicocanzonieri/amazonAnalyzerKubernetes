@@ -74,6 +74,9 @@ spec:
           # volumeMounts:
           #   - mountPath: /usr/share/logstash/pipeline
           #     name: task-logstash-storage
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
       restartPolicy: Always
       # volumes:
       #   - name: task-logstash-storage

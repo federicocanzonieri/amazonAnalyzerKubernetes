@@ -55,7 +55,11 @@ spec:
                   key: AWS_SECRET_ACCESS_KEY
             
           image: federicocanzonieri/amk-spark-s3 
+          
           name: spark-am
           resources: {}
       restartPolicy: Always
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
 status: {}

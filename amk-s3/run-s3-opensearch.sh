@@ -25,7 +25,6 @@ echo -e "Secrets Created \n"
 
 
 
-###PYTHON GET FOTO PROBLEM??
 
 ###ORA I DEPLOYMENT
 ##PYTHON

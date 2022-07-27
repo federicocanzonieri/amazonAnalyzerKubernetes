@@ -88,12 +88,11 @@ spec:
                   name: my-aws-credentials
                   key: NAME_FILES_S3
           
-
           # envFrom:
           # - secretRef:
           #     name: my-aws-credentials 
 
-          image: federicocanzonieri/amk-python-s3
+          image: federicocanzonieri/amk-python-s3-test
           name: python-am
           resources: {}
           volumeMounts:
