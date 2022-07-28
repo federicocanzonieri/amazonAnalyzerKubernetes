@@ -36,7 +36,7 @@ You can use to stop:
 Make sure to configure **.env** properly before use it (**CODE\_PRODUCT**, **START\_PAGE**,**END\_PAGE**,...) and configure **.env-aws-credentials** (**AWS_ACCESS_KEY_ID**,**AWS_SECRET_ACCESS_KEY**,**BUCKET_NAME**,**BUCKET_OUTPUT**).
 You can see the result using *opensearch* dashboard (you should have the URL).
 
-## Lambda function configuration
+#### Lambda function configuration
 
 The lambda.zip contains all the configuration, create a lambda function and upload the *zip* file, add a trigger from *S3* from the BUCKET_OUTPUT, trigger method PUT, filter by *.json* files only, add the environment variable *aws_access_key_id*, *aws_secret_access_key* (in lower case)  in the lambda editor. Add the permission for S3 read and Elastic Search operations.
 
