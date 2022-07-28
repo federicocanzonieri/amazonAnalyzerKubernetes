@@ -108,7 +108,7 @@ The app uses the docker images present on the *docker hub*, you can build your o
   
 ## Configuration
 
-To modify configuration see **python-deployment.yaml** file.
+To modify configuration see **python-deployment.yaml** and **.env** file.
 
 | Variable| Description |Default value|
 | :-: | :-: |:-:|
@@ -118,6 +118,21 @@ To modify configuration see **python-deployment.yaml** file.
 |END_PAGE|Page end reviews | 6 |
 |DOMAIN_URL| Domain for fetch pages (www.amazon.) | supported co.uk,it  |
 |MODE_REVIEWS| "recent" or "useful" | "recent"  |
+
+To modify configuration for AWS see **.env-aws-credentials** file.
+
+| Variable| Description |Default value|
+| :-: | :-: |:-:|
+|AWS\_ACCESS\_KEY\_ID| AWS ACCESS KEY |  |
+|AWS\_SECRET\_ACCESS\_KEY| AWS SECRET ACCESS KEY |  |
+|BUCKET\_NAME |Bucket for storing original data | |
+|NAME\_FILES\_S3|Prefix for files in bucket BUCKET_NAME  |  |
+|BUCKET_OUTPUT| Bucket for storing processed data |   |
+|REGION\_BUCKET| Region of bucket BUCKET_OUTPUT |   |
+|INDEX_OPENSEARCH| Name of index to store on opensearch |   |
+|USER_OPENSEARCH| User opensearch |   |
+|PASSWORD_OPENSEARCH| Password opensearch |   |
+|DOMAIN_URL_OPENSEARCH| Domain url opensearch |   |
 
 
 ## Notes
