@@ -126,6 +126,8 @@ ua=UserAgent()
 userAgent=ua.random
 print(f"\nUser Agent {userAgent} \n")
 
+print("CAMBIAMENTO IMMAGINE 12:04 \n")
+
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--no-sandbox')
