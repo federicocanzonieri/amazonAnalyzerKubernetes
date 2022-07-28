@@ -1,6 +1,6 @@
 name: Publish Docker image
 
-Just for failing
+# Just for failing
 
 on:
   push:
@@ -35,15 +35,23 @@ jobs:
         run: bash build-s3-opensearch.sh 
       - name: Rename images
         run: |
-          docker tag amk-python-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test
-          docker tag amk-spark-s3-to-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-test
-          docker tag amk-logstash-opensearch ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch
+          docker tag amk-python-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test-pipe
+          docker tag amk-spark-s3-to-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-test-pipe
+          docker tag amk-logstash-opensearch ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch-pipe
           
       - name: Push images
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-test
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test-pipe
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-test-pipe
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch-pipe
+          
+      - name: Get Private Key  
+        run: |
+              echo "${{ secrets.SSH_KEY_AZURE }}" > ssh_dev_private_key
+              chmod 600 ssh_dev_private_key
+        
+      - name: Do something on server
+        run: ssh -i ssh_dev_private_key -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOSTNAME }} mkdir TESTCICD_ADESSO
 
 
       
