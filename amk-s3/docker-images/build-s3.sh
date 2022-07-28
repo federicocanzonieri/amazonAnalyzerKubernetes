@@ -6,7 +6,7 @@ if [ "$(ls -A spark-s3/setup/)" ]; then
 else
     echo "Installing Spark's dependencies "
     mkdir spark-s3/setup
-    wget https://downloads.apache.org/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz
+    wget wget https://archive.apache.org/dist/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz
     mv spark-3.1.2-bin-hadoop3.2.tgz spark-s3/setup/;
 fi
 

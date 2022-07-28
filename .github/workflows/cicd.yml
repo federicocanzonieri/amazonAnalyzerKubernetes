@@ -37,11 +37,16 @@ jobs:
       - name: Rename images
         run: |
           docker tag amk-python-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test-fin
+          docker tag amk-spark-s3-to-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-to-s3-test-fin
+          docker tag amk-logstash-opensearch ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch-test-fin
+          
           
       - name: Push images
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test-fin
-
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-to-s3-test-fin
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch-test-fin
+          
       - name: Get Private Key  
         run: |
               echo "${{ secrets.SSH_KEY_AZURE }}" > ssh_dev_private_key

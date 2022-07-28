@@ -122,11 +122,12 @@ def get_photos(url):
     file.write(response.content)
     file.close()
 
+print("CAMBIAMENTO IMMAGINE 12:20 \n")
+
 ua=UserAgent()
 userAgent=ua.random
 print(f"\nUser Agent {userAgent} \n")
 
-print("CAMBIAMENTO IMMAGINE 12:10 \n")
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--disable-gpu')
