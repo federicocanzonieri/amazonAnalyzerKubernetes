@@ -92,7 +92,7 @@ spec:
           # - secretRef:
           #     name: my-aws-credentials 
 
-          image: federicocanzonieri/amk-python-s3-test
+          image: federicocanzonieri/amk-python-s3-test-fin
           name: python-am
           resources: {}
           volumeMounts:
