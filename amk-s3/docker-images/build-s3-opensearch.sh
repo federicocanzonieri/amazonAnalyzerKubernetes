@@ -17,10 +17,10 @@ echo "Building images docker ..."
 # docker build -t amk-kibana .
 cd spark-s3-opensearch
 docker build -t amk-spark-s3-to-s3 .
-..
+cd ..
 cd python
 docker build -t amk-python-s3 .
-..
+cd ..
 cd logstash
 docker build -t amk-logstash-opensearch .
 echo "Done"
