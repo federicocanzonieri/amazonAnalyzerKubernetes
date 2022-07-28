@@ -20,6 +20,8 @@ To configure a K8S cluster you can see the *k8s_ubuntu_vagrant*.
   ```
 
 ### AMK-S3-OPENSEARCH-LAMBDA
+#### Architecture
+![Alt text](arch.png "Architecture")
 The folder *amk-s3* use  kubernetes pods/services locally and some AWS services (S3,Lambda, Amazon Open Search Service, Grafana).
 Before starting the application make sure to configure the **.env** and **.env-aws-credentials** files on *python-deployment.yaml* (see after).
 After that you can use to start:
