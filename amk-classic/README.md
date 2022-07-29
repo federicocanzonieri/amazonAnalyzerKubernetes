@@ -19,6 +19,9 @@ To configure a K8S cluster you can see the *k8s_ubuntu_vagrant*.
   cd amazonAnalyzerKubernetes
   ```
 ### AMK-Classic
+#### Architecture
+![Alt text](images/arch-classic.png "Architecture ")
+
 The folder *amk-classic* use only kubernetes pods/services locally, it doesn't use any AWS services. 
 Before starting the application make sure to configure the **.env** file on *python-deployment.yaml* (see after).
 After that you can use to start:

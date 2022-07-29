@@ -21,7 +21,7 @@ To configure a K8S cluster you can see the *k8s_ubuntu_vagrant*.
 
 ### AMK-S3-OPENSEARCH-LAMBDA
 #### Architecture
-![Alt text](arch.png "Architecture")
+![Alt text](images/arch-s3-lambda-opensearch.png "Architecture s3-lambda-opensearch")
 
 The folder *amk-s3* use  kubernetes pods/services locally and some AWS services (S3,Lambda, Amazon Open Search Service, Grafana).
 Before starting the application make sure to configure the **.env** and **.env-aws-credentials** files on *python-deployment.yaml* (see after).
@@ -47,6 +47,9 @@ The lambda.zip contains all the configuration, create a lambda function and uplo
 
 
 ### AMK-S3-OPENSEARCH
+#### Architecture
+![Alt text](images/arch-s3-opensearch.png "Architecture s3-opensearch")
+
 The folder *amk-s3* use  kubernetes pods/services locally and some AWS services (S3, Amazon Open Search Service, Grafana).
 Before starting the application make sure to configure the **.env** and **.env-aws-credentials** files on *python-deployment.yaml* (see after).
 After that you can use to start:
@@ -75,6 +78,9 @@ The app uses the docker images present on the *docker hub*, you can build your o
   ```
   
 ### AMK-S3
+#### Architecture
+![Alt text](images/arch-s3.png "Architecture s3")
+
 The folder *amk-s3* use  kubernetes pods/services locally and some AWS services (S3).
 Before starting the application make sure to configure the **.env** and **.env-aws-credentials** files on *python-deployment.yaml* (see after).
 After that you can use to start:

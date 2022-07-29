@@ -36,24 +36,29 @@ jobs:
         
       - name: Rename images
         run: |
-          docker tag amk-python-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test-fin
-          docker tag amk-spark-s3-to-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-to-s3-test-fin
-          docker tag amk-logstash-opensearch ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch-test-fin
+          docker tag amk-python-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3
+          docker tag amk-spark-s3-to-s3 ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-to-s3
+          docker tag amk-logstash-opensearch ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch
           
           
       - name: Push images
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3-test-fin
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-to-s3-test-fin
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch-test-fin
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-python-s3
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-spark-s3-to-s3
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/amk-logstash-opensearch
+
+      - name: Build-compose
+        run: bash build-s3.sh 
+
+
           
-      - name: Get Private Key  
-        run: |
-              echo "${{ secrets.SSH_KEY_AZURE }}" > ssh_dev_private_key
-              chmod 600 ssh_dev_private_key
+      # - name: Get Private Key  
+      #   run: |
+      #         echo "${{ secrets.SSH_KEY_AZURE }}" > ssh_dev_private_key
+      #         chmod 600 ssh_dev_private_key
         
-      - name: Do something on server
-        run: ssh -i ssh_dev_private_key -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOSTNAME }} kubectl rollout -n federico restart deployment python
+      # - name: Do something on server
+      #   run: ssh -i ssh_dev_private_key -o StrictHostKeyChecking=no ${{ secrets.USER }}@${{ secrets.HOSTNAME }} kubectl rollout -n federico restart deployment python
 
 
       
